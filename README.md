@@ -73,3 +73,56 @@ To do that type in ```git checkout -- hello_world.py```
 
 If the file accidently got added to the staging area (shame on you for not testing your code before staging but it happens). We will just do the same thing we did with the passwords.txt file and do a git reset HEAD hello_world.txt and then issue a git checkout -- hello_world.txt.
 
+If you accidently committed the file fear not you can still recover.
+
+Break the file again
+```git commit -am "Bad"```
+
+The -am tells it to add all the files and commit them. It is a shortcut way of doing a git add and commit
+
+We need to find the hash we want to back from:
+
+```git log --all --decorate --oneline --graph``` and this will show you the status.
+
+Find the hash of the commit you want the file from and then you can issue.
+
+```git checkout (hash) -- (filename)```
+
+For example for us we want to back up to the previous commit so we would do:
+```git checkout e710da1 -- hello_world.py```
+
+Another very powerful feature of git is branching. I use them constantly because it allows me to keep my master branch as what I expect and then allows me to add features/bugfixes/etc. There are ways to do this locally, push the branches to the remote repo, etc. but if there is interest we can do another session that gets more into intermediate/advanced git operations (we still have not even scratches the surface).
+
+The easy way is just go to the webpage and create a branch from there. We notice both branches have hte same commit hash so we know they are in sync.
+
+If we go to our PC and try and checkout this branch we are goign to get an error.
+
+If we do a ```git branch -a``` we see that new branch is not on our local yet.
+
+This is because we need to tell our local repo to check the remote repo for any changes. To do this we do a ```git pull```
+
+If we do a ```git branch -a``` we see a new branch is available and now we can check it out.
+
+```git checkout hello_world2```
+
+A ```git branch -a``` shows we are on the hello_world2 branch.
+
+Now let us add another file called ```hello_world2.py``` with a little bit more information.
+
+Let us cheat and do the ```git add .``` and ```git commit -m "Hello World2``` and a ```git push```
+
+We will see our branch is up to date and everything is good.
+
+If we flip back to the webpage though we will notice only hello_world2 branch was updated and the commit hashes are different for master and hello_world2. As of now master is unaware of the changes.
+
+If we click on the compare and pull request we can see the differences and do a pull request that will merge teh two branches.
+
+Walk through deleting the branch.
+
+Flip back over to your terminal and ```git checkout master```. However once again we are not goign to have the changes because we have not told our local repo to get them. To do that we will do a ```git pull -p``` and you can see new files came down. The -p also tells git to prune any branches that have been deleted from teh remote repo.
+
+To delete the branch we can do a git branch -d hello_world2
+
+Once again we can do a ```git log --all --decorate --oneline –graph``` to show the git log.
+
+Also git is very nice and that git (command) --help will display help for the items.
